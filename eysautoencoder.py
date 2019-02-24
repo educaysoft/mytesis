@@ -35,7 +35,7 @@ input_dim=x_train.shape[1]
 input_img=Input(shape=(28,28,1))
 encoder_layer = autoencoder.layers[0]
 encoder=Model(input_img,encoder_layer(input_img))
-autoencoder.compile(optimizer='adam', loss='binary_cressentropy')
+autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
 autoencoder.fit(x_train,xtrain,epochs=20, batch_size=128, validation_data=(x_test, x_test))
 num_images=10
 np.random.seed(42)
