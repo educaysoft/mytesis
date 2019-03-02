@@ -64,26 +64,27 @@ autoencoder.fit(x_train,x_train,epochs=20, batch_size=128, validation_data=(x_te
 autoencoder.compile(optimizer='adam',loss='binary_crossentropy')
 autoencoder.fit(x_train_i, x_train_o, epochs=20, batch_size=128, validation_data=(x_test_i,x_test_o))
 
-num_images=10
+num_images=2
 np.random.seed(42)
-random_test_images= np.random.randint(x_test.shape[0],size=num_images)
+random_test_images= np.random.randint(x_test_p.shape[0],size=num_images)
 
-encoded_imgs =encoder.predict(x_test)
-decoded_imgs=autoencoder.predict(x_test)
+encoded_imgs =encoder.predict(x_test_p)
+decoded_imgs=autoencoder.predict(x_test_p)
 
-plt.figure(figsize=(18,4))
+plt.figure(figsize=(400,400))
 for i, image_idx in enumerate(random_test_images):
   ax = plt.subplot(3, num_images, i+1)
-  plt.imshow(x_test[image_idx].reshape(28,28))
+  plt.imshow(x_test[image_idx].reshape(400,400))
   plt.gray()
   ax.get_xaxis().set_visible(False)
   ax.get_yaxis().set_visible(False)
   
-  
+  '''
   ax =plt.subplot(3,num_images, 2*num_images+i+1)
   plt.imshow(decoded_imgs[image_idx].reshape(28,28))
   plt.gray()
   ax.get_xaxis().set_visible(False)
   ax.get_xaxis().set_visible(False)
+  '''
   plt.show()
 
