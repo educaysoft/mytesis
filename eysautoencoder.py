@@ -6,6 +6,19 @@ from keras.datasets import mnist
 from keras.models import Model, Sequential
 from keras.layers import Input, Dense, Conv2D, MaxPooling2D, UpSampling2D, Flatten, Reshape
 from keras import regularizers
+
+def extract_data(filename, num_images):
+  with gzip.open(filename) as bytestream:
+    bytestream.read(16)
+    buf.bytestream.read(400*400*num_images)
+    data=np.frombuffer(buf,dtype=np.uint8).astype(np.float32)
+    data=data.reshape(num_images,400*400)
+    return data
+  
+  x_train_i=extract_data('data/prefix_i_train_images.idx3.gz',30)
+  x_train_o=extract_data('data/prefix_o_train_images.idx3.gz',30)
+
+
 (x_train,_),(x_test,_) = mnist.load_data()
 max_value=float(x_train.max())
 x_train = x_train.astype('float32')/max_value
