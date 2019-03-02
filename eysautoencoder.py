@@ -15,10 +15,19 @@ def extract_data(filename, num_images):
     data=data.reshape(num_images,400*400)
     return data
   
-  x_train_i=extract_data('data/prefix_i_train_images.idx3.gz',30)
-  x_train_o=extract_data('data/prefix_o_train_images.idx3.gz',30)
+x_train_i=extract_data('data/prefix_i_train_images.idx3.gz',10)
+x_train_o=extract_data('data/prefix_o_train_images.idx3.gz',10)
 
+x_test_i=extract_data('data/prefix_i_train_images.idx3.gz',5)
+x_test_o=extract_data('data/prefix_o_train_images.idx3.gz',5)
+max_value+float(x_train_i.max())
+x_train_i=x_train_i.astype('float32')/max_value
+x_train_o=x_train_o.astype('float32')/max_value
+ 
+x_test_i=x_test_i.astype('float32')/max_value
+x_test_o=x_test_o.astype('float32')/max_value
 
+'''
 (x_train,_),(x_test,_) = mnist.load_data()
 max_value=float(x_train.max())
 x_train = x_train.astype('float32')/max_value
@@ -26,10 +35,10 @@ x_test = x_test.astype('float32')/max_value
 
 x_train = x_train.reshape((len(x_train), 28,28,1))
 x_test = x_test.reshape((len(x_test), 28,28,1))
-
+'''
 autoencoder = Sequential()
 
-autoencoder.add(Conv2D(16, (3,3), activation='relu', padding='same', input_shape=(28,28,1)))
+autoencoder.add(Conv2D(16, (3,3), activation='relu', padding='same', input_shape=(400,400,1)))
 autoencoder.add(MaxPooling2D((2,2), padding='same'))
 autoencoder.add(Conv2D(8,(3,3), activation= 'relu', padding='same'))
 autoencoder.add(MaxPooling2D((2,2), padding='same'))
@@ -45,11 +54,16 @@ autoencoder.add(UpSampling2D((2,2)))
 autoencoder.add(Conv2D(1,(3,3),activation='sigmoid', padding='same'))
 
 input_dim=x_train.shape[1]
-input_img=Input(shape=(28,28,1))
+input_img=Input(shape=(400,400,1))
 encoder_layer = autoencoder.layers[0]
 encoder=Model(input_img,encoder_layer(input_img))
+'''
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
 autoencoder.fit(x_train,x_train,epochs=20, batch_size=128, validation_data=(x_test, x_test))
+'''
+autoencoder.compile(optimizer='adam',loss='binary_crossentropy')
+autoencoder.fit(x_train_i, x_train_o, epochs=20, batch_size=128, validation_data=(x_test_i,x_test_o))
+
 num_images=10
 np.random.seed(42)
 random_test_images= np.random.randint(x_test.shape[0],size=num_images)
