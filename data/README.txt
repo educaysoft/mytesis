@@ -1,0 +1,1 @@
+Imagenes en formato idx
