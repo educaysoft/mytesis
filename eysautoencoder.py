@@ -53,7 +53,7 @@ x_test = x_test.reshape((len(x_test), 28,28,1))
 '''
 autoencoder = Sequential()
 
-autoencoder.add(Conv2D(16, (3,3), activation='relu', padding='same', input_shape=(400,400,1)))
+autoencoder.add(Conv2D(16, (3,3), activation='relu', padding='same', input_shape=(img_size,img_size,1)))
 autoencoder.add(MaxPooling2D((2,2), padding='same'))
 autoencoder.add(Conv2D(8,(3,3), activation= 'relu', padding='same'))
 autoencoder.add(MaxPooling2D((2,2), padding='same'))
@@ -74,10 +74,7 @@ input_dim=x_train_i.shape[1]
 input_img=Input(shape=(img_size,img_size,1))
 encoder_layer = autoencoder.layers[0]
 encoder=Model(input_img,encoder_layer(input_img))
-'''
-autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
-autoencoder.fit(x_train,x_train,epochs=20, batch_size=128, validation_data=(x_test, x_test))
-'''
+
 autoencoder.compile(optimizer='adam',loss='binary_crossentropy')
 autoencoder.fit(x_train_i, x_train_o, epochs=20, batch_size=128, validation_data=(x_test_i,x_test_o))
 
@@ -96,5 +93,5 @@ for i, image_idx in enumerate(random_test_images):
   ax.get_xaxis().set_visible(False)
   ax.get_yaxis().set_visible(False)
   
-    plt.show()
+  plt.show()
 
