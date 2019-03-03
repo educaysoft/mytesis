@@ -17,13 +17,13 @@ def extract_data(filename, num_images):
     data=data.reshape(num_images,img_size*img_size)
     return data
   
-x_train_i=extract_data('data/prefix_i_train_images.idx3.gz',10)
-x_train_o=extract_data('data/prefix_o_train_images.idx3.gz',10)
+x_train_i=extract_data('data/prefijo_train_images.idx3.gz',10)
+x_train_o=extract_data('data/prefijo_train_images.idx3.gz',10)
 
-x_test_i=extract_data('data/prefix_i_train_images.idx3.gz',5)
-x_test_o=extract_data('data/prefix_o_train_images.idx3.gz',5)
+x_test_i=extract_data('data/prefijo_train_images.idx3.gz',5)
+x_test_o=extract_data('data/prefijo_train_images.idx3.gz',5)
 
-x_pred_i=extract_data('data/prefijo_i_train_images.idx3.gz',2)
+x_pred_i=extract_data('data/prefijo_train_images.idx3.gz',2)
 
 max_value=float(x_train_i.max())
 x_train_i=x_train_i.astype('float32')/max_value
