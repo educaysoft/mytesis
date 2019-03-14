@@ -1,5 +1,6 @@
 '''
-Programa que implementa la Red Neuronal Comvolucional Autoencoder (RNCA)
+Autor: Stalin Francis
+Descripcion: Código que implementar la Red Neuronal Comvolucional Autoencoder (RNCA)
 '''
 
 from IPython.display import Image, SVG
