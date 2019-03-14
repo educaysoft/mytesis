@@ -7,7 +7,7 @@ from keras.models import Model, Sequential
 from keras.layers import Input, Dense, Conv2D, MaxPooling2D, UpSampling2D, Flatten, Reshape
 from keras import regularizers
 import gzip
-img_size=32
+img_size=512
 
 def extract_data(filename, num_images):
   with gzip.open(filename) as bytestream:
@@ -59,7 +59,7 @@ autoencoder.add(Conv2D(8,(3,3), activation= 'relu', padding='same'))
 autoencoder.add(MaxPooling2D((2,2), padding='same'))
 autoencoder.add(Conv2D(8,(3,3), strides=(2,2), activation='relu', padding='same'))
 autoencoder.add(Flatten())
-autoencoder.add(Reshape((50,50,8)))
+autoencoder.add(Reshape((64,64,8)))
 autoencoder.add(Conv2D(8,(3,3), activation='relu', padding='same'))
 autoencoder.add(UpSampling2D((2,2)))
 autoencoder.add(Conv2D(8,(3,3), activation='relu', padding='same'))
