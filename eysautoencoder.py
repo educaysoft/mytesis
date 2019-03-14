@@ -42,15 +42,7 @@ x_test_o=x_test_i.reshape((len(x_test_o),img_size,img_size,1))
 
 x_pred_i=x_pred_i.reshape((len(x_pred_i),img_size,img_size,1))
 
-'''
-(x_train,_),(x_test,_) = mnist.load_data()
-max_value=float(x_train.max())
-x_train = x_train.astype('float32')/max_value
-x_test = x_test.astype('float32')/max_value
 
-x_train = x_train.reshape((len(x_train), 28,28,1))
-x_test = x_test.reshape((len(x_test), 28,28,1))
-'''
 autoencoder = Sequential()
 
 autoencoder.add(Conv2D(16, (3,3), activation='relu', padding='same', input_shape=(img_size,img_size,1)))
@@ -78,20 +70,18 @@ encoder=Model(input_img,encoder_layer(input_img))
 autoencoder.compile(optimizer='adam',loss='binary_crossentropy')
 autoencoder.fit(x_train_i, x_train_o, epochs=20, batch_size=128, validation_data=(x_test_i,x_test_o))
 
-num_images=2
-np.random.seed(42)
-random_test_images= np.random.randint(x_pred_i.shape[0],size=num_images)
-
+'''
+Obtiene la imagen libre de ruido
+'''
 encoded_imgs =encoder.predict(x_pred_i)
 decoded_imgs=autoencoder.predict(x_pred_i)
 
-plt.figure(figsize=(img_size,img_size))
-for i, image_idx in enumerate(random_test_images):
-  ax = plt.subplot(3, num_images, i+1)
-  plt.imshow(x_test[image_idx].reshape(img_size,img_size))
-  plt.gray()
-  ax.get_xaxis().set_visible(False)
-  ax.get_yaxis().set_visible(False)
-  
-  plt.show()
+plt.figure(1)
+ax = plt.subplot(1,1, 1)
+plt.imshow(decoded_imgs[0].reshape(img_size,img_size))
+plt.gray()
+plt.show()
+ax.get_xaxis().set_visible(False)
+ax.get_yaxis().set_visible(False)
+
 
