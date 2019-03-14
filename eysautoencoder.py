@@ -1,3 +1,7 @@
+'''
+Programa que implementa la Red Neuronal Comvolucional Autoencoder (RNCA)
+'''
+
 from IPython.display import Image, SVG
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,6 +13,10 @@ from keras import regularizers
 import gzip
 img_size=512
 
+'''
+Funcion para subir las imagenes del archivos idx
+'''
+
 def extract_data(filename, num_images):
   with gzip.open(filename) as bytestream:
     bytestream.read(16)
@@ -16,6 +24,9 @@ def extract_data(filename, num_images):
     data=np.frombuffer(buf,dtype=np.uint8).astype(np.float32)
     data=data.reshape(num_images,img_size*img_size)
     return data
+'''
+Proceso de carga de las imagenes
+'''
   
 x_train_i=extract_data('data/input_train_images.idx3.gz',10)
 x_train_o=extract_data('data/output_train_images.idx3.gz',10)
@@ -24,6 +35,10 @@ x_test_i=extract_data('data/input_test_images.idx3.gz',5)
 x_test_o=extract_data('data/output_test_images.idx3.gz',5)
 
 x_pred_i=extract_data('data/input_predict_images.idx3.gz',2)
+
+'''
+Normalización de cada pixel de las imagenes cargadas
+'''
 
 max_value=float(x_train_i.max())
 x_train_i=x_train_i.astype('float32')/max_value
@@ -42,6 +57,9 @@ x_test_o=x_test_i.reshape((len(x_test_o),img_size,img_size,1))
 
 x_pred_i=x_pred_i.reshape((len(x_pred_i),img_size,img_size,1))
 
+'''
+Arquitectura de la Red Neuronal Convolucional - Autoencoder  con 14 capas
+'''
 
 autoencoder = Sequential()
 
