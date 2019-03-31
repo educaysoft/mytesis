@@ -13,6 +13,7 @@ from keras.layers import Input, Dense, Conv2D, MaxPooling2D, UpSampling2D, Flatt
 from keras import regularizers
 import gzip
 img_size=512
+img_size=128
 
 '''
 Funcion para subir las imagenes del archivos idx
@@ -21,7 +22,7 @@ Funcion para subir las imagenes del archivos idx
 def extract_data(filename, num_images):
   with gzip.open(filename) as bytestream:
     bytestream.read(16)
-    buf.bytestream.read(img_size*img_size*num_images)
+    buf=bytestream.read(img_size*img_size*num_images)
     data=np.frombuffer(buf,dtype=np.uint8).astype(np.float32)
     data=data.reshape(num_images,img_size*img_size)
     return data
@@ -29,13 +30,13 @@ def extract_data(filename, num_images):
 Proceso de carga de las imagenes
 '''
   
-x_train_i=extract_data('data/input_train_images.idx3.gz',10)
-x_train_o=extract_data('data/output_train_images.idx3.gz',10)
+x_train_i=extract_data('data/input_train_images_idx3.gz',10)
+x_train_o=extract_data('data/output_train_images_idx3.gz',10)
 
-x_test_i=extract_data('data/input_test_images.idx3.gz',5)
-x_test_o=extract_data('data/output_test_images.idx3.gz',5)
+x_test_i=extract_data('data/input_test_images_idx3.gz',5)
+x_test_o=extract_data('data/output_test_images_idx3.gz',5)
 
-x_pred_i=extract_data('data/input_predict_images.idx3.gz',2)
+x_pred_i=extract_data('data/input_predict_images_idx3.gz',2)
 
 '''
 Normalización de cada pixel de las imagenes cargadas
@@ -70,7 +71,7 @@ autoencoder.add(Conv2D(8,(3,3), activation= 'relu', padding='same'))
 autoencoder.add(MaxPooling2D((2,2), padding='same'))
 autoencoder.add(Conv2D(8,(3,3), strides=(2,2), activation='relu', padding='same'))
 autoencoder.add(Flatten())
-autoencoder.add(Reshape((64,64,8)))
+autoencoder.add(Reshape((img_size/8,img_size/8,8)))
 autoencoder.add(Conv2D(8,(3,3), activation='relu', padding='same'))
 autoencoder.add(UpSampling2D((2,2)))
 autoencoder.add(Conv2D(8,(3,3), activation='relu', padding='same'))
@@ -87,7 +88,7 @@ encoder_layer = autoencoder.layers[0]
 encoder=Model(input_img,encoder_layer(input_img))
 
 autoencoder.compile(optimizer='adam',loss='binary_crossentropy')
-autoencoder.fit(x_train_i, x_train_o, epochs=20, batch_size=128, validation_data=(x_test_i,x_test_o))
+autoencoder.fit(x_train_i, x_train_o, epochs=200, batch_size=128, validation_data=(x_test_i,x_test_o))
 
 '''
 Obtiene la imagen libre de ruido
