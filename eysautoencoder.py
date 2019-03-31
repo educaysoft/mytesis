@@ -98,10 +98,17 @@ decoded_imgs=autoencoder.predict(x_pred_i)
 
 plt.figure(1)
 ax = plt.subplot(1,1, 1)
-plt.imshow(decoded_imgs[0].reshape(img_size,img_size))
+plt.imshow(x_pred_i[0].reshape(img_size,img_size))
 plt.gray()
 plt.show()
 ax.get_xaxis().set_visible(False)
 ax.get_yaxis().set_visible(False)
 
+plt.figure(2)
+ax = plt.subplot(1,1, 1)
+plt.imshow(decoded_imgs[0].reshape(img_size,img_size))
+plt.gray()
+plt.show()
+ax.get_xaxis().set_visible(False)
+ax.get_yaxis().set_visible(False)
 
