@@ -24,7 +24,7 @@ def extract_data(filename, num_images):
     bytestream.read(16)
     buf=bytestream.read(img_size*img_size*num_images)
     data=np.frombuffer(buf,dtype=np.uint8).astype(np.float32)
-    data=data.reshape(num_images,img_size*img_size)
+    data=data.reshape(num_images,img_size*img_size,1)
     return data
 '''
 Proceso de carga de las imagenes
@@ -36,7 +36,7 @@ x_train_o=extract_data('data/output_train_images_idx3.gz',10)
 x_test_i=extract_data('data/input_test_images_idx3.gz',5)
 x_test_o=extract_data('data/output_test_images_idx3.gz',5)
 
-x_pred_i=extract_data('data/input_predict_images_idx3.gz',2)
+x_pred_i=extract_data('data/input_pred_images_idx3.gz',2)
 
 '''
 Normalización de cada pixel de las imagenes cargadas
