@@ -30,13 +30,13 @@ def extract_data(filename, num_images):
 Proceso de carga de las imagenes
 '''
   
-x_train_i=extract_data('data/input_train_images_idx3.gz',10)
-x_train_o=extract_data('data/output_train_images_idx3.gz',10)
+x_train_i=extract_data('data512/input_train_imagesN20_idx3.gz',30)
+x_train_o=extract_data('data512/output_train_images_idx3.gz',30)
 
-x_test_i=extract_data('data/input_test_images_idx3.gz',5)
-x_test_o=extract_data('data/output_test_images_idx3.gz',5)
+x_test_i=extract_data('data512/input_train_imagesN20_idx3.gz',5)
+x_test_o=extract_data('data512/output_train_images_idx3.gz',5)
 
-x_pred_i=extract_data('data/input_pred_images_idx3.gz',2)
+x_pred_i=extract_data('data512/input_pred_imagesN20_idx3.gz',2)
 
 '''
 Normalización de cada pixel de las imagenes cargadas
