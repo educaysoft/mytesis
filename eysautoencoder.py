@@ -13,7 +13,7 @@ from keras.layers import Input, Dense, Conv2D, MaxPooling2D, UpSampling2D, Flatt
 from keras import regularizers
 import gzip
 img_size=512
-img_size=128
+
 
 '''
 Funcion para subir las imagenes del archivos idx
